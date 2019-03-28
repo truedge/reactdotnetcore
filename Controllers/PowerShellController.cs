@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Microsoft.AspNetCore.Html;
-using reactdotnetcore.utility;
 
+using reactdotnetcore.utility;
 
 
 namespace reactdotnetcore.controllers
@@ -28,10 +28,10 @@ namespace reactdotnetcore.controllers
             
             //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
             var cmd = "date" + " | ConvertTo-Json";
-            var whoami = Utility_PowerShell.runPSCmd(cmd);
+            var returnStr =  ConsoleApp_dotnetcore.Utility_PowerShell.runPSCmd(cmd);
 
 
-            var returnStr = whoami;// "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
+            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
             JObject myObj = JObject.Parse(returnStr);
             return myObj;
         }
@@ -47,7 +47,8 @@ namespace reactdotnetcore.controllers
         [HttpPost]
         public PowerShellCmd post([FromBody] PowerShellCmd psCmdData)
         {
-            psCmdData.cmdOutput = Utility_PowerShell.runPSCmd(psCmdData.cmd);
+       
+            psCmdData.cmdOutput =  ConsoleApp_dotnetcore.Utility_PowerShell.runPSCmd(psCmdData.cmd);
             return psCmdData;
         }
 
