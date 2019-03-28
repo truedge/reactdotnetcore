@@ -16,10 +16,10 @@ export class PowerShell extends Component {
 
 
     //fetch('api/Greeting/action')
-    fetch('api/Greeting')
+    fetch('api/powershell')
       .then(response => response.json())
       .then(data => {
-        this.setState({ currentName: data.Name, greeting:data.Greeting, psCommand: "date", loading:false});
+        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
       });
 
       this.runPowerShell = this.runPowerShell.bind(this);
@@ -27,13 +27,36 @@ export class PowerShell extends Component {
   
 
   runPowerShell () {
-    console.log("here");
-    fetch('api/Greeting')
+    
+    
+    /* GET
+    fetch('api/powershell')
       .then(response => response.json())
       .then(data => {
-        this.setState({ currentName: data.Name, greeting:data.Greeting, psCommand: "date", loading:false});
+        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
       });
+      */ 
+      var cmd = document.getElementById("pscmd").value;
+
+      fetch('api/powershell',
+      {
+        method:'post',
+        body:"{\"cmd\":\"" + cmd + "\"}",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
+      });
+
+
+
   }
+
+
   
 
   render () {
@@ -42,12 +65,20 @@ export class PowerShell extends Component {
         <h1>PowerShell</h1>
 
         <p>Enter the text you would like to run.</p>
-        <input type="text" value={this.state.psCommand}></input>
-
-        <p>Greeting: {this.state.greeting} <strong>{this.state.currentName}</strong></p>
+        <input id="pscmd"  type="text" defaultValue="date" onChange={ this.handleChange.bind(this) } ></input>
+        <br/><br/>
+        <p>Run Command: {this.state.psCommand}</p>
+        <button className="btn btn-primary" onClick={this.runPowerShell}>Run script</button> 
+        <br/>
         
-        <button className="btn btn-primary" onClick={this.runPowerShell}>Add Last Name</button>
+        <div  style={{height: 100, width:300, borderColor: 'gray', borderWidth: 1}}>
+        {this.state.psReturn} 
+        </div> 
       </div>
     );
+  }
+
+  handleChange(e) {
+    this.setState({ psCommand: e.target.value });
   }
 }

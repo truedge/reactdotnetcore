@@ -9,19 +9,29 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Html;
 using reactdotnetcore.utility;
 
+
+
 namespace reactdotnetcore.controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PowerShellController : ControllerBase
     {
-        // GET api/values
+        
+
+        // GET api/powershell
         [HttpGet]
         public ActionResult<JObject> Get()
         {
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
-            var returnStr = "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
+            
+            
+            //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
+            var cmd = "date" + " | ConvertTo-Json";
+            var whoami = Utility_PowerShell.runPSCmd(cmd);
+
+
+            var returnStr = whoami;// "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
             JObject myObj = JObject.Parse(returnStr);
             return myObj;
         }
@@ -35,8 +45,10 @@ namespace reactdotnetcore.controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public PowerShellCmd post([FromBody] PowerShellCmd psCmdData)
         {
+            psCmdData.cmdOutput = Utility_PowerShell.runPSCmd(psCmdData.cmd);
+            return psCmdData;
         }
 
         // PUT api/values/5
@@ -50,5 +62,11 @@ namespace reactdotnetcore.controllers
         public void Delete(int id)
         {
         }
+    }
+
+    public class PowerShellCmd
+    {
+        public string cmd { get; set; }
+        public string cmdOutput { get; set; }
     }
 }
