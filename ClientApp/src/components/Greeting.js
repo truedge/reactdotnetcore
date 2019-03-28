@@ -39,9 +39,9 @@ export class Greeting extends Component {
   render () {
     return (
       <div>
-        <h1>Counter</h1>
+        <h1>Greeting</h1>
 
-        <p>This is a simple example of a React component.</p>
+        <p>This is a simple example of a React component. New dev version2</p>
 
         <p>Greeting: {this.state.greeting} <strong>{this.state.currentName}</strong></p>
 
