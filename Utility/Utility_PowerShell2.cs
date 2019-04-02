@@ -6,7 +6,7 @@ using System.Management.Automation.Runspaces;
 
 namespace reactdotnetcore.utility
 {
-    class Utility_PowerShell
+    class Utility_PowerShell2
     {
         public static string runPSCmd(string psScript)
         {

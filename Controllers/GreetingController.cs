@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Html;
 using reactdotnetcore.utility;
 
+
 namespace reactdotnetcore.controllers
 {
     [Route("api/[controller]")]
@@ -20,11 +21,11 @@ namespace reactdotnetcore.controllers
         public ActionResult<JObject> Get()
         {
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            var whoami = Utility_PowerShell.runPSCmd("whoami");
-            var returnStr = "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
+            var returnStr = "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3)  + DateTime.Now.Second.ToString() +"\"}";
             JObject myObj = JObject.Parse(returnStr);
             return myObj;
         }
+
 
         // GET api/values/5
         [HttpGet("{id}")]

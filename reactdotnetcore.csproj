@@ -10,14 +10,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App"/>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All"/>
-    <PackageReference Include="Json.Net" Version="1.0.16"/>
     <PackageReference Include="Microsoft.PowerShell.NanoServer.NetCore.Library" Version="1.0.0"/>
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.2.0-rc.1"/>
+    <PackageReference Include="MySqlConnector" Version="0.51.1"/>
   </ItemGroup>
   <ItemGroup>
     <Content Remove="$(SpaRoot)**"/>
     <None Remove="$(SpaRoot)**"/>
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ConsoleApp_dotnetcore">
+      <HintPath>ReactWDotnetCore\Utility\CustomDLLs\ConsoleApp_dotnetcore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <Exec Command="node --version" ContinueOnError="true">
