@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Html;
 using reactdotnetcore.utility;
 
+
 namespace reactdotnetcore.controllers
 {
     [Route("api/[controller]")]
@@ -24,6 +25,7 @@ namespace reactdotnetcore.controllers
             JObject myObj = JObject.Parse(returnStr);
             return myObj;
         }
+
 
         // GET api/values/5
         [HttpGet("{id}")]

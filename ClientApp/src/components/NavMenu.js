@@ -45,6 +45,9 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/powershell">PowerShell</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/mysql">mySQL</NavLink>
+                </NavItem>
               </ul>
             </Collapse>
           </Container>
