@@ -13,7 +13,7 @@ export class CreateProcess extends Component {
   constructor (props) {
     super(props);
     
-    this.state = { id: "", currentName: "", psCommand: "date|convertto-json", loading: true };
+    this.state = { id: "", currentName: "", psCommand: "date|convertto-json", loading: false };
 
       this.insertProcess = this.insertProcess.bind(this);
     
@@ -62,7 +62,6 @@ export class CreateProcess extends Component {
         <Typography variant="h4" color="inherit">
           Create Process
         </Typography>
-        <p>Enter the text you would like to run.</p>
         <form id="cProcess" 
             onSubmit={
               (e) => {
