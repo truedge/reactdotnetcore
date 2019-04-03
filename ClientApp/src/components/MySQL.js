@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import { withStyles } from '@material-ui/core/styles';
+
+
 
 export class MySQL extends Component {
 
@@ -56,7 +61,7 @@ export class MySQL extends Component {
       })
       .then(response => response.json())
       .then(data => {
-        this.setState({ sqlCommand: this.state.sqlCommand, sqlOutput: JSON.stringify(data), loading:false});
+        this.setState({ sqlCommand: this.state.sqlCommand.trim(), sqlOutput: JSON.stringify(data), loading:false});
       });
 
 
@@ -73,19 +78,25 @@ export class MySQL extends Component {
           placeholder="MultiLine with rows: 2 and rowsMax: 4"
           autoFocus={true}
           multiline={true}
-          rows={7}
+          rows={3}
           rowsMax={200}
           fullWidth={true}
           required={true}
-          defaultValue="select * from step_types"
+          value={this.state.sqlCommand}
           onChange={ this.handleChange.bind(this) }
           onKeyDown={ this.keyPress.bind(this) }
         />
-        <br/><br/>
-        <p>Run SQL: {this.state.sqlCommand}</p>
-        <button className="btn btn-primary" onClick={this.runSQL}>Run script</button> 
-        <br/>
         
+        <br/><br/>
+        <Button 
+          variant="contained" 
+          color="primary"
+          fullWidth={true}
+          children="Run SQL"
+          onClick= {this.runSQL}
+        ></Button>
+        <br/><br/>
+        <p>SQL: {this.state.sqlCommand}</p>
         <div  style={{height: 100, width:300, borderColor: 'gray', borderWidth: 1}}>
         {this.state.sqlOutput} 
         </div> 
