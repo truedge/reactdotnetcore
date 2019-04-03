@@ -48,6 +48,9 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/mysql">mySQL</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/processlist">Process Admin</NavLink>
+                </NavItem>
               </ul>
             </Collapse>
           </Container>
