@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 
 export class PowerShell extends Component {
   static displayName = PowerShell.name;
-/*
-  constructor (props) {
-    super(props);
-    this.state = {  currentName: "Jamie" };
-    this.setGreeting = this.setGreeting.bind(this);
-  }
 
-  */
   constructor (props) {
     super(props);
-    this.state = { greeting: "", currentName: "", psCommand: "date", loading: true };
+    
+    this.state = { greeting: "", currentName: "", psCommand: "date|convertto-json", loading: true };
 
 
     //fetch('api/Greeting/action')
@@ -23,6 +20,7 @@ export class PowerShell extends Component {
       });
 
       this.runPowerShell = this.runPowerShell.bind(this);
+      this.keyPress = this.keyPress.bind(this);
   }
   
 
@@ -49,7 +47,7 @@ export class PowerShell extends Component {
       })
       .then(response => response.json())
       .then(data => {
-        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
+        this.setState({ psCommand: this.state.psCommand.trim(), psReturn: JSON.stringify(data), loading:false});
       });
 
 
@@ -60,17 +58,37 @@ export class PowerShell extends Component {
   
 
   render () {
+    
     return (
+      
       <div>
         <h1>PowerShell</h1>
 
         <p>Enter the text you would like to run.</p>
-        <input id="pscmd"  type="text" defaultValue="date" onChange={ this.handleChange.bind(this) } ></input>
+        <TextField
+          id="pscmd"
+          placeholder="MultiLine with rows: 2 and rowsMax: 4"
+          autoFocus={true}
+          multiline={true}
+          rows={3}
+          rowsMax={200}
+          fullWidth={true}
+          required={true}
+          value={this.state.psCommand}
+          onChange={ this.handleChange.bind(this) }
+          onKeyDown={ this.keyPress.bind(this) }
+        />
         <br/><br/>
-        <p>Run Command: {this.state.psCommand}</p>
-        <button className="btn btn-primary" onClick={this.runPowerShell}>Run script</button> 
-        <br/>
         
+        <Button 
+          variant="contained" 
+          color="primary"
+          fullWidth={true}
+          children="Run Command"
+          onClick= {this.runPowerShell}
+        ></Button>
+        <br/><br/>
+        <p>Command: {this.state.psCommand}</p>
         <div  style={{height: 100, width:300, borderColor: 'gray', borderWidth: 1}}>
         {this.state.psReturn} 
         </div> 
@@ -78,7 +96,18 @@ export class PowerShell extends Component {
     );
   }
 
+
   handleChange(e) {
     this.setState({ psCommand: e.target.value });
   }
+
+  keyPress(e){
+    //alert(e.keyCode);
+    if(e.keyCode === 13){
+       console.log('value', e.target.value);
+       // put the login here
+       this.runPowerShell();
+    }
+  }
+  
 }

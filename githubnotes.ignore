@@ -1,3 +1,7 @@
 git push origin master
 
 git push origin --delete feature1
+
+git branch --delete feature1
+
+git checkout dev

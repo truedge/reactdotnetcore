@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
+
+import Button from '@material-ui/core/Button';
+
+
 
 export class MySQL extends Component {
-  static displayName = MySQL.name;
-/*
-  constructor (props) {
-    super(props);
-    this.state = {  currentName: "Jamie" };
-    this.setGreeting = this.setGreeting.bind(this);
-  }
 
-  */
+
+  static displayName = MySQL.name;
+
   constructor (props) {
     super(props);
     this.state = { greeting: "", currentName: "", sqlCommand: "select * from step_types", loading: true };
@@ -31,8 +31,10 @@ export class MySQL extends Component {
       });
 
       this.runSQL = this.runSQL.bind(this);
+      this.keyPress = this.keyPress.bind(this);
   }
   
+
 
   runSQL () {
     
@@ -57,31 +59,42 @@ export class MySQL extends Component {
       })
       .then(response => response.json())
       .then(data => {
-        this.setState({ sqlCommand: this.state.sqlCommand, sqlOutput: JSON.stringify(data), loading:false});
+        this.setState({ sqlCommand: this.state.sqlCommand.trim(), sqlOutput: JSON.stringify(data), loading:false});
       });
 
 
 
   }
 
-
-  
-
   render () {
     return (
       <div>
         <h1>mySQL</h1>
-        <details>
-          <summary>See More</summary>
-          This text will be hidden if your browser supports it.
-        </details>
-        <p>Enter the text you would like to run.</p>
-        <textarea id="sqlcmd" cols="65" rows="7" type="text" defaultValue="select * from step_types" onChange={ this.handleChange.bind(this) } ></textarea>
-        <br/><br/>
-        <p>Run SQL: {this.state.sqlCommand}</p>
-        <button className="btn btn-primary" onClick={this.runSQL}>Run script</button> 
-        <br/>
+        <p>Enter the query you would like to run.</p>
+        <TextField
+          id="sqlcmd"
+          placeholder="MultiLine with rows: 2 and rowsMax: 4"
+          autoFocus={true}
+          multiline={true}
+          rows={3}
+          rowsMax={200}
+          fullWidth={true}
+          required={true}
+          value={this.state.sqlCommand}
+          onChange={ this.handleChange.bind(this) }
+          onKeyDown={ this.keyPress.bind(this) }
+        />
         
+        <br/><br/>
+        <Button 
+          variant="contained" 
+          color="primary"
+          fullWidth={true}
+          children="Run SQL"
+          onClick= {this.runSQL}
+        ></Button>
+        <br/><br/>
+        <p>SQL: {this.state.sqlCommand}</p>
         <div  style={{height: 100, width:300, borderColor: 'gray', borderWidth: 1}}>
         {this.state.sqlOutput} 
         </div> 
@@ -92,4 +105,17 @@ export class MySQL extends Component {
   handleChange(e) {
     this.setState({ sqlCommand: e.target.value });
   }
+
+  keyPress(e){
+    //alert(e.keyCode);
+    if(e.keyCode === 13){
+       console.log('value', e.target.value);
+       // put the login here
+       this.runSQL();
+    }
+  }
+
+  
+  
+  
 }
