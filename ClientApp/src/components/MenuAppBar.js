@@ -92,6 +92,9 @@ class MenuAppBar extends React.Component {
                   <MenuItem onClick={this.handleClose}>
                     <NavLink tag={Link} className="text-dark" to="/processlist">Process Admin</NavLink>
                   </MenuItem>
+                  <MenuItem onClick={this.handleClose}>
+                    <NavLink tag={Link} className="text-dark" to="/createprocess">Create Process</NavLink>
+                  </MenuItem>
                 </Menu>
               </div>
             )}
