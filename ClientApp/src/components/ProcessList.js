@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table';
 
-
+import Typography from '@material-ui/core/Typography';
 export class ProcessList extends Component {
 
 
@@ -69,7 +69,10 @@ export class ProcessList extends Component {
       
       <div>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
-        <h1>Process Administration</h1>    
+
+        <Typography variant="h4" color="inherit">
+          Process Administration
+        </Typography>    
         <br/><br/>
         <Button 
           variant="contained" 
@@ -103,7 +106,7 @@ export class ProcessList extends Component {
   getList(){
     
     var returnData = [];
-    if(this.state.processList!==""){
+    if(this.state.processList!=""){
       //alert(JSON.parse(this.state.processList));
       //returnData = [{"id":1,"name":"test name","description":"test desc","createdate":"2019-03-30T00:00:00","modifieddate":null,"active":1,"createdby":"jedge"}];
       returnData = JSON.parse(this.state.processList);
