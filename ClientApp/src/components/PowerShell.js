@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import Typography from '@material-ui/core/Typography';
 
 export class PowerShell extends Component {
   static displayName = PowerShell.name;
@@ -20,7 +20,8 @@ export class PowerShell extends Component {
       });
 
       this.runPowerShell = this.runPowerShell.bind(this);
-      this.keyPress = this.keyPress.bind(this);
+      
+    
   }
   
 
@@ -62,8 +63,9 @@ export class PowerShell extends Component {
     return (
       
       <div>
-        <h1>PowerShell</h1>
-
+        <Typography variant="h4" color="inherit">
+          PowerShell
+        </Typography>
         <p>Enter the text you would like to run.</p>
         <TextField
           id="pscmd"

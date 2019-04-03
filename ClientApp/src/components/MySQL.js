@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 
 import Button from '@material-ui/core/Button';
-
+import Typography from '@material-ui/core/Typography';
 
 
 export class MySQL extends Component {
@@ -69,7 +69,9 @@ export class MySQL extends Component {
   render () {
     return (
       <div>
-        <h1>mySQL</h1>
+        <Typography variant="h4" color="inherit">
+          mySQL
+        </Typography>  
         <p>Enter the query you would like to run.</p>
         <TextField
           id="sqlcmd"
