@@ -20,7 +20,8 @@ export class PowerShell extends Component {
       });
 
       this.runPowerShell = this.runPowerShell.bind(this);
-      this.keyPress = this.keyPress.bind(this);
+      
+    
   }
   
 

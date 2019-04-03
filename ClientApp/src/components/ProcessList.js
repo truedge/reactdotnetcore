@@ -103,7 +103,7 @@ export class ProcessList extends Component {
   getList(){
     
     var returnData = [];
-    if(this.state.processList!=""){
+    if(this.state.processList!==""){
       //alert(JSON.parse(this.state.processList));
       //returnData = [{"id":1,"name":"test name","description":"test desc","createdate":"2019-03-30T00:00:00","modifieddate":null,"active":1,"createdby":"jedge"}];
       returnData = JSON.parse(this.state.processList);
