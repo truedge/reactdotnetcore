@@ -75,7 +75,7 @@ export class CreateProcess extends Component {
             }
         >
           <TextField required={true} label="Name" id="pName"/><br/>
-          <TextField required={true} label="Description" id="pDescription" multiline={true} rows={3}/>
+          <TextField required={true} label="Description" id="pDescription" multiline={true} fullWidth={true} rows={3}/>
           <br/><br/>
           <Button 
             variant="contained" 

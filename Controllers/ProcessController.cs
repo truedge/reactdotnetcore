@@ -88,12 +88,25 @@ namespace reactdotnetcore.controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public JObject Delete(int id)
         {
+            var sql = @"update process set active = 0" + "where id = '" + id + "'";
+            Console.WriteLine("sql: " + sql);
+            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            
+            JObject myObj;
+            try{
+                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
+                myObj = JObject.Parse(jsonString);
+            }catch{
+                myObj = JObject.Parse("{\"status\":\"complete\"}");
+            }
+            return myObj;
         }
     }
 
