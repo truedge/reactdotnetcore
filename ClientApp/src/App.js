@@ -8,6 +8,7 @@ import { Greeting } from './components/Greeting';
 import { PowerShell } from './components/PowerShell';
 import { MySQL } from './components/MySQL';
 import { ProcessList } from './components/ProcessList';
+import { CreateProcess } from './components/CreateProcess';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -22,6 +23,7 @@ export default class App extends Component {
         <Route path='/powershell' component={PowerShell} />
         <Route path='/mysql' component={MySQL} />
         <Route path='/processlist' component={ProcessList} />
+        <Route path='/createprocess' component={CreateProcess} />
       </Layout>
     );
   }
