@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 
 
-export class CreateProcess extends Component {
+export class CreateProcessStep extends Component {
   static displayName = CreateProcess.name;
 
   constructor (props) {
@@ -80,7 +80,7 @@ export class CreateProcess extends Component {
             variant="contained" 
             color="primary"
             fullWidth={true}
-            children="Create Process"
+            children="Create Process Step"
             form="cProcess"
             type="submit"
           ></Button>

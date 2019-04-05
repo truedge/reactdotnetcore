@@ -1,0 +1,50 @@
+editable={{
+            
+            onRowAdd: () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  {
+                    /* const data = this.state.data;
+                data.push(newData);
+                this.setState({ data }, () => resolve()); */
+                  }
+                  resolve()
+                }, 1000)
+              }),
+            onRowUpdate: () =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  {
+                    /* const data = this.state.data;
+            const index = data.indexOf(oldData);
+            data[index] = newData;                
+            this.setState({ data }, () => resolve()); */
+                  }
+                  resolve()
+                }, 1000)
+              }),
+            onRowDelete: oldData =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  {
+                    
+                    {this.DeleteProcess(oldData.id)}
+                    /* let data = this.state.data;
+            const index = data.indexOf(oldData);
+            data.splice(index, 1);
+            this.setState({ data }, () => resolve()); */
+           
+                   setTimeout(() => {
+                   { 
+                     {this.getProcessList()}
+                    }
+                    resolve()
+                   }, 30)
+
+
+
+                  }
+                  resolve()
+                }, 500)
+              }),
+          }}

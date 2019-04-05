@@ -18,7 +18,7 @@ namespace reactdotnetcore.controllers
     public class ProcessListController : ControllerBase
     {
         
-
+        string sql = "select *, \"undeploy\" as 'availableActions' from process order by name";
         // GET api/powershell
         [HttpGet]
         public ActionResult<JArray> Get()
@@ -27,7 +27,7 @@ namespace reactdotnetcore.controllers
             
             
             //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
-            var sql = "select * from process";
+            
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
 
@@ -50,7 +50,7 @@ namespace reactdotnetcore.controllers
         public JArray post([FromBody] SQLQuery sqlCmdData)
         {
        
-            var sql = "select * from process";
+            
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
 
