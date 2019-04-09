@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 
 export class CreateProcessStep extends Component {
-  static displayName = CreateProcess.name;
+  static displayName = CreateProcessStep.name;
 
   constructor (props) {
     super(props);
@@ -21,18 +21,10 @@ export class CreateProcessStep extends Component {
 
   insertProcess () {
     
-    
-    /* GET
-    fetch('api/powershell')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
-      });
-      */ 
       var name = document.getElementById("pName").value;
       var description = document.getElementById("pDescription").value;
 
-      fetch('api/process',
+      fetch('api/processstep',
       {
         method:'post',
         body:"{\"name\":\"" + name + "\",\"description\": \"" + description +  "\",\"active\":"  + "1" + " }",
@@ -58,7 +50,7 @@ export class CreateProcessStep extends Component {
       <div>
         <br/>
         <Typography variant="h4" color="inherit">
-          Create Process
+          Create Process Step
         </Typography>
         <form id="cProcess" 
             onSubmit={
@@ -66,7 +58,7 @@ export class CreateProcessStep extends Component {
                 /**
                  * Prevent submit from reloading the page
                  */
-                this.insertProcess();
+                this.insertProcessStep();
                 e.preventDefault();
                 e.stopPropagation();
                 this.props.history.push('/processlist');

@@ -7,8 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import RefreshIcon  from '@material-ui/icons/Refresh';
 
 import MaterialTable from 'material-table';
-import Switch from '@material-ui/core/Switch';
 import ToggleProcessActive from './ToggleProcessActive';
+import Icon from '@material-ui/core/Icon';
+import { IconButton } from '@material-ui/core';
 
 
 export class ProcessList extends Component {
@@ -113,18 +114,23 @@ export class ProcessList extends Component {
                 }else{
                   actionButtons = <ToggleProcessActive pid={rowData.id} checked={false}></ToggleProcessActive>
                 }
-                /*
-                if(rowData.availableActions.indexOf("undeploy")>0){
-                  actionButtons = <StopButton color="primary" textRendering="Undeploy" />
-                }*/
 
                 return(
-                   <div>
-                        {actionButtons}
-                  </div>
+                   <div>{actionButtons}</div>
+                 )
+              } 
+            },
+            { 
+              title: 'Edit', 
+              field: 'edit',
+              
+              render: rowData => {
                 
-                 
-                )
+                // SET ACTION BUTTONS TO USE IN COLUMN DATA
+
+                return(
+                   <div><Button target="_blank" href="/createprocessstep"><Icon>edit_icon</Icon></Button></div>
+                 )
               } 
             },
             { title: 'id', field: 'id', hidden: true },
