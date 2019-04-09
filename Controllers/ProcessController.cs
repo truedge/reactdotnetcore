@@ -55,6 +55,25 @@ namespace reactdotnetcore.controllers
             return myObj;
         }
 
+        // POST getProcess
+         [HttpPost("{id}")]
+        //Process/ProcessConfig/34
+        public JObject post(int id)
+        {
+            var sql = "select * from process where id = " + id.ToString();
+            
+            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
+            jsonString = jsonString.Substring(1, jsonString.Length - 2); // trim 
+            JObject myObj = JObject.Parse(jsonString);
+            try{
+                myObj = JObject.Parse(jsonString);
+            }catch{
+                myObj = JObject.Parse("[]");
+            }
+            return myObj;
+        }
+
         // POST api/values
         
         [HttpPost]

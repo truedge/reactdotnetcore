@@ -43,15 +43,6 @@ export class ProcessList extends Component {
   }
   
   getProcessList () {
-    
-    
-    /* GET
-    fetch('api/powershell')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
-      });
-      */ 
 
       fetch('api/processlist',
       {
@@ -127,9 +118,9 @@ export class ProcessList extends Component {
               render: rowData => {
                 
                 // SET ACTION BUTTONS TO USE IN COLUMN DATA
-
+                var viewUrl = "/viewprocess/" + rowData.id;
                 return(
-                   <div><Button target="_blank" href="/createprocessstep"><Icon>edit_icon</Icon></Button></div>
+                   <div><Button target="_blank" href={viewUrl}><Icon>edit_icon</Icon></Button></div>
                  )
               } 
             },
