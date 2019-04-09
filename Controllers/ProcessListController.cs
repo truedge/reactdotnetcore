@@ -18,7 +18,7 @@ namespace reactdotnetcore.controllers
     public class ProcessListController : ControllerBase
     {
         
-        string sql = "select *, \"undeploy\" as 'availableActions' from process order by name";
+        string sql = "select *, CASE WHEN ACTIVE = 1 THEN \"undeploy\" ELSE \"deploy\" END as 'availableActions' from process order by name";
         // GET api/powershell
         [HttpGet]
         public ActionResult<JArray> Get()

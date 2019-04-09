@@ -3,9 +3,10 @@ import Switch from '@material-ui/core/Switch';
 
 class ToggleProcessActive extends React.Component {
   state = {
-    pid:null,
-    checked: true
+    pid:this.props.pid,
+    checked: this.props.checked
   };
+
 
 
   handleChange = name => event => {
@@ -30,6 +31,7 @@ class ToggleProcessActive extends React.Component {
         'Accept': 'application/json'
       }
     })
+    this.state = { pid: pId, checked: false};
 
   }   
 
@@ -40,10 +42,14 @@ class ToggleProcessActive extends React.Component {
     fetch(sUrl,
     {
       method:'put',
+      body:"{\"userId\":\"  jedge \"}",
       headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }
     })
+
+    this.state = { pid: pId, checked: true};
 
   }   
 
@@ -57,6 +63,7 @@ class ToggleProcessActive extends React.Component {
           color="primary"
         />
       </div>
+      
     );
   }
 }

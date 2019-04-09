@@ -108,10 +108,10 @@ export class ProcessList extends Component {
                 var actionButtons = "";
                 
                 // SET ACTION BUTTONS TO USE IN COLUMN DATA
-                if(rowData.availableActions.indexOf("undeploy")>0){
-                  actionButtons =  <ToggleProcessActive pid={rowData.id} checked={rowData.active}></ToggleProcessActive>
+                if(rowData.active>0){
+                  actionButtons =  <ToggleProcessActive pid={rowData.id} checked={true}></ToggleProcessActive>
                 }else{
-                  actionButtons = <ToggleProcessActive pid={rowData.id} checked={rowData.active}></ToggleProcessActive>
+                  actionButtons = <ToggleProcessActive pid={rowData.id} checked={false}></ToggleProcessActive>
                 }
                 /*
                 if(rowData.availableActions.indexOf("undeploy")>0){
