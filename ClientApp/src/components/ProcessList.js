@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 
 import Button from '@material-ui/core/Button';
-import MaterialTable from 'material-table';
+
 
 import Typography from '@material-ui/core/Typography';
-import MTableToolbar from 'bootstrap';
-import { AddIcon,IconButton } from 'bootstrap';
-import { Toolbar } from '@material-ui/core';
+import RefreshIcon  from '@material-ui/icons/Refresh';
+
+import MaterialTable from 'material-table';
+import ToggleProcessActive from './ToggleProcessActive';
+import Icon from '@material-ui/core/Icon';
+import { IconButton } from '@material-ui/core';
 
 
 export class ProcessList extends Component {
 
 
   static displayName = ProcessList.name;
+
+  
 
   constructor (props) {
     super(props);
@@ -38,15 +43,6 @@ export class ProcessList extends Component {
   }
   
   getProcessList () {
-    
-    
-    /* GET
-    fetch('api/powershell')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
-      });
-      */ 
 
       fetch('api/processlist',
       {
@@ -66,23 +62,8 @@ export class ProcessList extends Component {
 
   }
 
-  DeleteProcess (pId) {
 
-      var sUrl = "api/process/" + String(pId);
 
-      fetch(sUrl,
-      {
-        method:'delete',
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-     /* .then(response => response.json())
-      .then(data => {
-        this.setState({ loading:false});
-      });
-        */
-  }
 
   render () {
     
@@ -95,97 +76,74 @@ export class ProcessList extends Component {
           Process Administration
         </Typography>    
         <br/><br/>
+
         <Button 
           variant="contained" 
           color="primary"
           fullWidth={true}
           children="Get Process Inventory"
           onClick= {this.getProcessList}
-        ></Button>
+        >Refresh  <RefreshIcon/>
+        </Button>
+
         <br/><br/>
         <div style={{ maxWidth: '100%' }}>
         <MaterialTable
           
           
           columns={[
-            { title: 'id', field: 'id' },
-            { title: 'name', field: 'name' },
-            { title: 'description', field: 'description' },
-            { title: 'modifieddate', field: 'modifieddate' },
-            { title: 'createdate', field: 'createdate' },
-            { title: 'createdby', field: 'createdby' },
-            { title: 'active', field: 'active' }
+            { 
+              title: 'Active', 
+              field: 'availableActions',
+              
+              render: rowData => {
+                var actionButtons = "";
+                
+                // SET ACTION BUTTONS TO USE IN COLUMN DATA
+                if(rowData.active>0){
+                  actionButtons =  <ToggleProcessActive pid={rowData.id} checked={true}></ToggleProcessActive>
+                }else{
+                  actionButtons = <ToggleProcessActive pid={rowData.id} checked={false}></ToggleProcessActive>
+                }
+
+                return(
+                   <div>{actionButtons}</div>
+                 )
+              } 
+            },
+            { 
+              title: 'Edit', 
+              field: 'edit',
+              
+              render: rowData => {
+                
+                // SET ACTION BUTTONS TO USE IN COLUMN DATA
+                var viewUrl = "/viewprocess/" + rowData.id;
+                return(
+                   <div><Button target="_blank" href={viewUrl}><Icon>edit_icon</Icon></Button></div>
+                 )
+              } 
+            },
+            { title: 'id', field: 'id', hidden: true },
+            { title: 'name', field: 'name', children:'name' },
+            { title: 'description', field: 'description', type: 'string'  },
+            { title: 'modifieddate', field: 'modifieddate', type: 'datetime', readonly: true  },
+            { title: 'createdate', field: 'createdate', type: 'datetime', readonly: true },
+            { title: 'createdby', field: 'createdby', type:'string', readonly: true },
+            { title: 'active', field: 'active', readonly: true }
             
           ]}
           //data={[{"id":1,"name":"test name","description":"test desc","createdate":"2019-03-30T00:00:00","modifieddate":null,"active":1,"createdby":"jedge"}]}
           data = {this.getList()}
           title="Search"
-          editable={{
-            onClick: () =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                {
-                  alert("click");
-                  /* const data = this.state.data;
-              data.push(newData);
-              this.setState({ data }, () => resolve()); */
-                }
-                resolve()
-              }, 1)
-            }),
-            onRowAdd: () =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  {
-                    /* const data = this.state.data;
-                data.push(newData);
-                this.setState({ data }, () => resolve()); */
-                  }
-                  resolve()
-                }, 1000)
-              }),
-            onRowUpdate: () =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  {
-                    /* const data = this.state.data;
-            const index = data.indexOf(oldData);
-            data[index] = newData;                
-            this.setState({ data }, () => resolve()); */
-                  }
-                  resolve()
-                }, 1000)
-              }),
-            onRowDelete: oldData =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  {
-                    
-                    {this.DeleteProcess(oldData.id)}
-                    /* let data = this.state.data;
-            const index = data.indexOf(oldData);
-            data.splice(index, 1);
-            this.setState({ data }, () => resolve()); */
-           
-                   setTimeout(() => {
-                   { 
-                     {this.getProcessList()}
-                    }
-                    resolve()
-                   }, 30)
-
-
-
-                  }
-                  resolve()
-                }, 500)
-              }),
-          }}
+          
         />
       </div>
       </div>
     );
   }
+
+
 
   getList(){
     

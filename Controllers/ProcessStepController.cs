@@ -15,7 +15,7 @@ namespace reactdotnetcore.controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProcessController : ControllerBase
+    public class ProcessStepController : ControllerBase
     {
         
 
@@ -27,7 +27,7 @@ namespace reactdotnetcore.controllers
             
             
             //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
-            var sql = "select * from process";
+            var sql = "select * from step order by name";
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
 
@@ -41,26 +41,7 @@ namespace reactdotnetcore.controllers
         [HttpGet("{id}")]
         public ActionResult<JObject> Get(int id)
         {
-            var sql = "select * from process where id = " + id.ToString();
-            
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
-            jsonString = jsonString.Substring(1, jsonString.Length - 2); // trim 
-            JObject myObj = JObject.Parse(jsonString);
-            try{
-                myObj = JObject.Parse(jsonString);
-            }catch{
-                myObj = JObject.Parse("[]");
-            }
-            return myObj;
-        }
-
-        // POST getProcess
-         [HttpPost("{id}")]
-        //Process/ProcessConfig/34
-        public JObject post(int id)
-        {
-            var sql = "select * from process where id = " + id.ToString();
+            var sql = "select * from step where id = " + id.ToString();
             
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
@@ -77,15 +58,17 @@ namespace reactdotnetcore.controllers
         // POST api/values
         
         [HttpPost]
-        public JObject post([FromBody] ProcessData processData)
+        public JObject post([FromBody] ProcessStepData processStepData)
         {
        
-            var sql = @"insert into process (  `name`, `description`, `createdate`, `modifieddate`,`active`,`createdby` ) "
-              + "values ('" + processData.name + "', '" + processData.description + "', " 
+            var sql = @"insert into step (  `name`, `description`, `createdate`, `modifieddate`,`active`,`createdby`,`processid`,`steptypeid` ) "
+              + "values ('" + processStepData.name + "', '" + processStepData.description + "', " 
                             +  "current_date(), " 
                             +  "null, " 
-                            + processData.active.ToString()+ ", '" 
-                            +  "jedge' )";
+                            + processStepData.active.ToString() + ", '" 
+                            +  "jedge'," 
+                            + processStepData.processid.ToString() + ", '" 
+                            + processStepData.steptypeid.ToString() + ")";
             Console.WriteLine("sql: " + sql);
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
@@ -107,7 +90,7 @@ namespace reactdotnetcore.controllers
         [HttpPut("{id}")]
         public JObject Put(int id, [FromBody] JObject value)
         {
-            var sql = @"update process set active = 1, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
+            var sql = @"update step set active = 1, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
             Console.WriteLine("sql: " + sql);
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             
@@ -125,7 +108,7 @@ namespace reactdotnetcore.controllers
         [HttpDelete("{id}")]
         public JObject Delete(int id)
         {
-            var sql = @"update process set active = 0, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
+            var sql = @"update step set active = 0, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
             Console.WriteLine("sql: " + sql);
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             
@@ -141,9 +124,13 @@ namespace reactdotnetcore.controllers
     }
 
     
-    public class ProcessData
+    public class ProcessStepData
     {
         public int id { get; set; }
+
+        public int steptypeid { get; set; }
+
+        public int processid { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public DateTime createdate { get; set; }

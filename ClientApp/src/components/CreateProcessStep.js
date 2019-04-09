@@ -5,8 +5,8 @@ import Typography from '@material-ui/core/Typography';
 
 
 
-export class CreateProcess extends Component {
-  static displayName = CreateProcess.name;
+export class CreateProcessStep extends Component {
+  static displayName = CreateProcessStep.name;
 
   constructor (props) {
     super(props);
@@ -21,18 +21,10 @@ export class CreateProcess extends Component {
 
   insertProcess () {
     
-    
-    /* GET
-    fetch('api/powershell')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ psCommand: this.state.psCommand, psReturn: JSON.stringify(data), loading:false});
-      });
-      */ 
       var name = document.getElementById("pName").value;
       var description = document.getElementById("pDescription").value;
 
-      fetch('api/process',
+      fetch('api/processstep',
       {
         method:'post',
         body:"{\"name\":\"" + name + "\",\"description\": \"" + description +  "\",\"active\":"  + "1" + " }",
@@ -58,7 +50,7 @@ export class CreateProcess extends Component {
       <div>
         <br/>
         <Typography variant="h4" color="inherit">
-          Create Process
+          Create Process Step
         </Typography>
         <form id="cProcess" 
             onSubmit={
@@ -66,7 +58,7 @@ export class CreateProcess extends Component {
                 /**
                  * Prevent submit from reloading the page
                  */
-                this.insertProcess();
+                this.insertProcessStep();
                 e.preventDefault();
                 e.stopPropagation();
                 this.props.history.push('/processlist');
@@ -80,7 +72,7 @@ export class CreateProcess extends Component {
             variant="contained" 
             color="primary"
             fullWidth={true}
-            children="Create Process"
+            children="Create Process Step"
             form="cProcess"
             type="submit"
           ></Button>

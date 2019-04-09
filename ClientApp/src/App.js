@@ -9,6 +9,8 @@ import { PowerShell } from './components/PowerShell';
 import { MySQL } from './components/MySQL';
 import { ProcessList } from './components/ProcessList';
 import { CreateProcess } from './components/CreateProcess';
+import { CreateProcessStep } from './components/CreateProcessStep';
+import { ViewProcess } from './components/ViewProcess'
 
 export default class App extends Component {
   static displayName = App.name;
@@ -24,6 +26,8 @@ export default class App extends Component {
         <Route path='/mysql' component={MySQL} />
         <Route path='/processlist' component={ProcessList} />
         <Route path='/createprocess' component={CreateProcess} />
+        <Route path='/createprocessstep' component={CreateProcessStep} />
+        <Route path='/viewprocess/:handle' component={ViewProcess} />
       </Layout>
     );
   }
