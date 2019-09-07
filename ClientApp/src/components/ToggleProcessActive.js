@@ -31,7 +31,7 @@ class ToggleProcessActive extends React.Component {
         'Accept': 'application/json'
       }
     })
-    this.state = { pid: pId, checked: false};
+    this.setState( { pid: pId, checked: false} );
 
   }   
 
@@ -49,7 +49,7 @@ class ToggleProcessActive extends React.Component {
       }
     })
 
-    this.state = { pid: pId, checked: true};
+    this.setState( { pid: pId, checked: true} );
 
   }   
 

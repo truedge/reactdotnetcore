@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import AddIcon from '@material-ui/icons/Add'
+import Button from '@material-ui/core/Button';
 
 export class Process extends Component {
 
@@ -88,6 +90,7 @@ export class Process extends Component {
           {this.state.createdby}
           </CardContent>
         </Card>
+        <Button target="_blank" href="createprocessstep"><AddIcon/></Button>
         <br/><br/>
       </div>
     );
@@ -98,7 +101,7 @@ export class Process extends Component {
   getList(){
     
     var returnData = [];
-    if(this.state.processData!=""){
+    if(this.state.processData.toString()!==""){
       //alert(JSON.parse(this.state.processList));
       //returnData = [{"id":1,"name":"test name","description":"test desc","createdate":"2019-03-30T00:00:00","modifieddate":null,"active":1,"createdby":"jedge"}];
       returnData = JSON.parse(this.state.processData);

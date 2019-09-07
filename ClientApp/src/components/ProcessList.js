@@ -9,7 +9,6 @@ import RefreshIcon  from '@material-ui/icons/Refresh';
 import MaterialTable from 'material-table';
 import ToggleProcessActive from './ToggleProcessActive';
 import Icon from '@material-ui/core/Icon';
-import { IconButton } from '@material-ui/core';
 
 
 export class ProcessList extends Component {
@@ -148,7 +147,7 @@ export class ProcessList extends Component {
   getList(){
     
     var returnData = [];
-    if(this.state.processList!=""){
+    if(this.state.processList.toString()!==""){
       //alert(JSON.parse(this.state.processList));
       //returnData = [{"id":1,"name":"test name","description":"test desc","createdate":"2019-03-30T00:00:00","modifieddate":null,"active":1,"createdby":"jedge"}];
       returnData = JSON.parse(this.state.processList);

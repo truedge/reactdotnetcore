@@ -5,3 +5,6 @@ git push origin --delete feature1
 git branch --delete feature1
 
 git checkout dev
+
+// removes staged/unstaged changes 
+git reset --hard
