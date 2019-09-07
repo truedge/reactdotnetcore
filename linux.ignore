@@ -1,0 +1,7 @@
+etc/mysql/mysql.conf.d
+set the ip address of the sql server (bind)
+
+firewall
+udf
+sudo udf allow
+
