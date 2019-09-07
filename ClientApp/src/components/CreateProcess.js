@@ -35,7 +35,7 @@ export class CreateProcess extends Component {
       fetch('api/process',
       {
         method:'post',
-        body:"{\"name\":\"" + name + "\",\"description\": \"" + description +  "\",\"active\":"  + "1" + " }",
+        body:"{\"name\":\"" + name + "\",\"description\": \"" + description +  "\",\"active\":1 }",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

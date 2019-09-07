@@ -27,7 +27,7 @@ export class CreateProcessStep extends Component {
       fetch('api/processstep',
       {
         method:'post',
-        body:"{\"name\":\"" + name + "\",\"description\": \"" + description +  "\",\"active\":"  + "1" + " }",
+        body:"{\"name\":\"" + name + "\",\"description\": \"" + description +  "\",\"active\": 1 }",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

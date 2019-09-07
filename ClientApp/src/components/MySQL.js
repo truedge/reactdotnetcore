@@ -4,15 +4,18 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import CircularIndeterminate from './CircularIndeterminate'
 
 export class MySQL extends Component {
 
 
   static displayName = MySQL.name;
 
+
+
   constructor (props) {
     super(props);
-    this.state = { greeting: "", currentName: "", sqlCommand: "select * from step_types", loading: true };
+    this.state = { sqlOutput: "",  sqlCommand: "select * from step_types", loading: true };
 
 
     //fetch('api/Greeting/action')
@@ -32,12 +35,14 @@ export class MySQL extends Component {
 
       this.runSQL = this.runSQL.bind(this);
       this.keyPress = this.keyPress.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+
   }
   
 
 
   runSQL () {
-    
+    this.setState({ sqlCommand: this.state.sqlCommand, sqlOutput: "", loading: true });
     
     /* GET
     fetch('api/powershell')
@@ -48,27 +53,32 @@ export class MySQL extends Component {
       */ 
       var sql = document.getElementById("sqlcmd").value;
 
-      fetch('api/mysql',
-      {
-        method:'post',
-        body:"{\"sql\":\"" + sql + "\"}",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ sqlCommand: this.state.sqlCommand.trim(), sqlOutput: JSON.stringify(data), loading:false});
-      });
+      
+        fetch('api/mysql',
+        {
+          method:'post',
+          body:"{\"sql\":\"" + sql + "\"}",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ sqlCommand: this.state.sqlCommand, sqlOutput: JSON.stringify(data), loading:false});
+        });
+  }
 
-
-
+  handleSubmit (){
+    this.setState({ sqlCommand: this.state.sqlCommand, sqlOutput: "", loading: true });
+    setTimeout(this.runSQL, 1000);
   }
 
   render () {
     return (
       <div>
+
+        {this.state.loading ? <CircularIndeterminate/> : ""}
         <Typography variant="h4" color="inherit">
           mySQL
         </Typography>  
@@ -93,7 +103,7 @@ export class MySQL extends Component {
           color="primary"
           fullWidth={true}
           children="Run SQL"
-          onClick= {this.runSQL}
+          onClick= {this.handleSubmit}
         ></Button>
         <br/><br/>
         <p>SQL: {this.state.sqlCommand}</p>
