@@ -61,18 +61,18 @@ namespace reactdotnetcore.controllers
         public JObject post([FromBody] ProcessStepData processStepData)
         {
        
-            var sql = @"insert into step (  `name`, `description`, `createdate`, `modifieddate`,`active`,`createdby`,`processid`,`steptypeid` ) "
+            var sql = @"insert into esscoresql.step (  `name`, `description`, `createdate`, `modifieddate`,`active`,`createdby`,`processid`,`steptypeid` ) "
               + "values ('" + processStepData.name + "', '" + processStepData.description + "', " 
                             +  "current_date(), " 
                             +  "null, " 
                             + processStepData.active.ToString() + ", '" 
                             +  "jedge'," 
                             + processStepData.processid.ToString() + ", '" 
-                            + processStepData.steptypeid.ToString() + ")";
+                            + processStepData.steptypeid.ToString() + "')";
             Console.WriteLine("sql: " + sql);
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
-
+Console.WriteLine("sql return: " + returnStr);
             // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
             
             JObject myObj;

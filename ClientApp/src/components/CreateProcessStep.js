@@ -13,21 +13,27 @@ export class CreateProcessStep extends Component {
     
     this.state = { id: "", currentName: "", psCommand: "date|convertto-json", loading: false };
 
-      this.insertProcess = this.insertProcess.bind(this);
+      this.insertProcessStep = this.insertProcessStep.bind(this);
     
   }
   
 
 
-  insertProcess () {
+  insertProcessStep () {
     
       var name = document.getElementById("pName").value;
       var description = document.getElementById("pDescription").value;
+      var processid = 24;
+      var steptypeid = 2;
 
       fetch('api/processstep',
       {
         method:'post',
-        body:"{\"name\":\"" + name + "\",\"description\": \"" + description +  "\",\"active\": 1 }",
+        body:"{\"name\":\"" + name + "\",\"description\": \"" + description
+        + "\",\"processid\": \"" + processid
+        + "\",\"steptypeid\": \"" + steptypeid
+        +  "\",\"active\": 1 }",
+
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -38,6 +44,8 @@ export class CreateProcessStep extends Component {
         this.setState({ psCommand: this.state.psCommand.trim(), psReturn: JSON.stringify(data), loading:false});
       });
 
+        console.log("testing testing");
+        
 
 
   }
@@ -52,7 +60,7 @@ export class CreateProcessStep extends Component {
         <Typography variant="h4" color="inherit">
           Create Process Step
         </Typography>
-        <form id="cProcess" 
+        <form id="cProcessStep" 
             onSubmit={
               (e) => {
                 /**
@@ -73,7 +81,7 @@ export class CreateProcessStep extends Component {
             color="primary"
             fullWidth={true}
             children="Create Process Step"
-            form="cProcess"
+            form="cProcessStep"
             type="submit"
           ></Button>
         </form>
