@@ -50,3 +50,10 @@ git checkout dev
 // removes staged/unstaged changes 
 git reset --hard
 
+
+
+# Dotnet
+dotnet publish
+
+dotnet build
+dotnet run
