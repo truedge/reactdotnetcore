@@ -4,6 +4,7 @@ A react and dotnetcore platform
 
 RUN THE FOLLOWING TO GET CODE METRICS 
 
+npm install -g sloc
 sloc src
 
 ---------- Result ------------
@@ -20,6 +21,22 @@ sloc src
 
 Number of files read :  19
 
+9/8/2019
+---------- Result ------------
+
+            Physical :  2610
+              Source :  2150
+             Comment :  105
+ Single-line comment :  58
+       Block comment :  47
+               Mixed :  8
+ Empty block comment :  1
+               Empty :  364
+               To Do :  0
+
+Number of files read :  23
+
+----------------------------
 
 ## Snippets
 
@@ -39,6 +56,24 @@ Number of files read :  19
 
 
 # Feature Branching
+git checkout dev
+
+git branch feature
+
+-- develop feature
+
+git commit -a -m "commit msg"
+
+
+git checkout dev
+git merge feature
+git branch --delete feature
+
+git checkout master
+
+git merge dev
+
+
 git push origin master
 
 git push origin --delete feature1
