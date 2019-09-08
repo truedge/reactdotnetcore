@@ -32,8 +32,7 @@ Number of files read :  19
 **** set the ip address of the sql server (bind)
 
 ### linux firewall
-**** udf
-**** sudo udf allow
+**** sudo ufw allow
 
 
 
