@@ -19,3 +19,35 @@ sloc src
                To Do :  0
 
 Number of files read :  19
+
+
+## Snippets
+
+### mySQL
+* sudo mysqldump -u root -pitecmint --all-databasess > esscoresql.sql
+
+
+### linux
+* etc/mysql/mysql.conf.d
+**** set the ip address of the sql server (bind)
+
+### linux firewall
+**** udf
+**** sudo udf allow
+
+
+
+
+
+# Feature Branching
+git push origin master
+
+git push origin --delete feature1
+
+git branch --delete feature1
+
+git checkout dev
+
+// removes staged/unstaged changes 
+git reset --hard
+
