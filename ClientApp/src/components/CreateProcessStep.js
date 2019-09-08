@@ -3,6 +3,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import { StepTypeSelectList } from './StepTypeSelectList'
+
 
 
 export class CreateProcessStep extends Component {
@@ -24,7 +26,7 @@ export class CreateProcessStep extends Component {
       var name = document.getElementById("pName").value;
       var description = document.getElementById("pDescription").value;
       var processid = 24;
-      var steptypeid = 2;
+      var steptypeid = document.getElementById("pType").value;
 
       fetch('api/processstep',
       {
@@ -73,6 +75,8 @@ export class CreateProcessStep extends Component {
               }
             }
         >
+          <br/>
+          <StepTypeSelectList required={true} label="Type" id="pType"/><br/>
           <TextField required={true} label="Name" id="pName"/><br/>
           <TextField required={true} label="Description" id="pDescription" multiline={true} fullWidth={true} rows={3}/>
           <br/><br/>
