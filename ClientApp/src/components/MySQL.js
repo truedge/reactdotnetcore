@@ -15,7 +15,7 @@ export class MySQL extends Component {
 
   constructor (props) {
     super(props);
-    this.state = { sqlOutput: "",  sqlCommand: "select * from step_types", loading: true };
+    this.state = { sqlOutput: "",  sqlCommand: "#select * from step_types \n#select * from step", loading: true };
 
 
     //fetch('api/Greeting/action')
