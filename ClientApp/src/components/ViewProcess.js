@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import RefreshIcon  from '@material-ui/icons/Refresh';
 
 import { Process } from './Process'
+import { qs } from 'query-string';
 
 
 export class ViewProcess extends Component {
@@ -38,6 +39,13 @@ export class ViewProcess extends Component {
     //let url = this.props.location.search;
     //let params = queryString.parse(url);
     console.log("props " + this.props);
+
+    //console.log(location.search);
+
+    //console.log("props " +qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).processid);
+
+
+
     this.state = {  processList: [], loading: true };
 
 

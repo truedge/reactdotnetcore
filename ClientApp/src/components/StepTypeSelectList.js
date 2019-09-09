@@ -5,11 +5,16 @@ import React, { Component } from 'react';
 
 
 export class StepTypeSelectList extends Component {
+
+  state = {
+    id:this.props.id
+  };
+
   static displayName = StepTypeSelectList.name;
 
   render () {
     return (
-      <select defaultValue="2" id="pType">
+      <select defaultValue="2" id={this.state.id}>
         <option value="3">C#</option>
         <option value="1">Email</option>
         <option value="2">PowerShell</option>
