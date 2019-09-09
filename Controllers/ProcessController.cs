@@ -41,7 +41,61 @@ namespace reactdotnetcore.controllers
         [HttpGet("{id}")]
         public ActionResult<JObject> Get(int id)
         {
-            var sql = "select * from process where id = " + id.ToString();
+            // AGGREGATE DATA FROM TWO DIFFERENT DATA SETS
+
+
+            Console.WriteLine("Started Retrieving Process Data");
+            JObject headerObj = getProcessHeaderData(id);
+            JArray stepsArr = getProcessStepData(id);
+
+            JObject myObj = new JObject();
+            myObj.Add("header",headerObj);
+            myObj.Add("steps",stepsArr);
+
+            Console.WriteLine("Finished Retrieving Process Data");
+            return myObj;
+        }
+
+        static JObject getProcessHeaderData(int processId){
+            
+            var sql = "select * from process where id = " + processId.ToString();
+            
+            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
+            jsonString = jsonString.Substring(1, jsonString.Length - 2); // trim 
+            JObject myObj = JObject.Parse(jsonString);
+            
+            try{
+                myObj = JObject.Parse(jsonString);
+            }catch{
+                myObj = JObject.Parse("[]");
+            }
+            return myObj;
+        }
+
+
+        public JArray getProcessStepData(int processId)
+        {
+            //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            
+            
+            //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
+            var sql = "select * from step where processid = " + processId.ToString();
+            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
+
+            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
+            JArray myObj = JArray.Parse(jsonString);
+            return myObj;
+        }
+
+/* 
+        // GET api/process/5/steps
+        [HttpGet("{id}")]
+        public ActionResult<JObject> GetSteps(int id)
+        {
+            var sql = "select * from step where processid = " + id.ToString();
             
             DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
@@ -54,6 +108,14 @@ namespace reactdotnetcore.controllers
             }
             return myObj;
         }
+*/
+        static string runQuery(string sql){
+            string jsonStr = "";
+
+
+            return jsonStr;
+        }
+
 
         // POST getProcess
          [HttpPost("{id}")]

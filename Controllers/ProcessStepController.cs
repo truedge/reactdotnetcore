@@ -19,7 +19,7 @@ namespace reactdotnetcore.controllers
     {
         
 
-        // GET api/powershell
+        // GET api/processstep?processid=24
         [HttpGet]
         public ActionResult<JArray> Get()
         {
@@ -54,6 +54,8 @@ namespace reactdotnetcore.controllers
             }
             return myObj;
         }
+
+        
 
         // POST api/values
         

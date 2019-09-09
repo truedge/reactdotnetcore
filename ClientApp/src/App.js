@@ -17,6 +17,7 @@ export default class App extends Component {
 
   render () {
     return (
+      <div>>
       <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
@@ -29,6 +30,8 @@ export default class App extends Component {
         <Route path='/createprocessstep' component={CreateProcessStep} />
         <Route path='/viewprocess/:handle' component={ViewProcess} />
       </Layout>
+      <ProcessList/>
+      </div>
     );
   }
 }
