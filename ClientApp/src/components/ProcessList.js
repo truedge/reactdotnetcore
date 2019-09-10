@@ -119,8 +119,8 @@ export class ProcessList extends Component {
                 // SET ACTION BUTTONS TO USE IN COLUMN DATA
                 var viewUrl = "/viewprocess/" + rowData.id;
                 return(
-                   <div><Button target="_blank" href={viewUrl}><Icon>edit_icon</Icon></Button></div>
-                 )
+                  <div><Button target="_blank" href={viewUrl}><Icon>edit_icon</Icon></Button></div>
+                  )
               } 
             },
             { title: 'id', field: 'id', hidden: true },
