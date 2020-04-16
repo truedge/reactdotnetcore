@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-
-using Microsoft.AspNetCore.Html;
-
-using reactdotnetcore.utility;
 using System.Data;
 
 namespace reactdotnetcore.controllers
@@ -17,21 +8,13 @@ namespace reactdotnetcore.controllers
     [ApiController]
     public class ProcessListController : ControllerBase
     {
-        
+
         string sql = "select *, CASE WHEN ACTIVE = 1 THEN \"undeploy\" ELSE \"deploy\" END as 'availableActions' from process order by name";
         // GET api/powershell
         [HttpGet]
         public ActionResult<JArray> Get()
         {
-            //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
-            
-            //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
-            
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
-
-            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
             JArray myObj = JArray.Parse(jsonString);
             return myObj;
@@ -45,21 +28,18 @@ namespace reactdotnetcore.controllers
         }
 
         // POST api/values
-        
+
         [HttpPost]
         public JArray post([FromBody] SQLQuery sqlCmdData)
         {
-       
-            
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
 
-            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
             JArray myObj = JArray.Parse(jsonString);
             return myObj;
         }
-        
+
 
         // PUT api/values/5
         [HttpPut("{id}")]
@@ -74,11 +54,4 @@ namespace reactdotnetcore.controllers
         }
     }
 
-    /*
-    public class SQLQuery_ProcessList
-    {
-        public string sql { get; set; }
-        public string sqlOutput { get; set; }
-    }
-    */
 }

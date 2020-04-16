@@ -1,14 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-using Microsoft.AspNetCore.Html;
-
-using reactdotnetcore.utility;
 
 
 namespace reactdotnetcore.controllers
@@ -17,21 +8,17 @@ namespace reactdotnetcore.controllers
     [ApiController]
     public class PowerShellController : ControllerBase
     {
-        
+
 
         // GET api/powershell
         [HttpGet]
         public ActionResult<JObject> Get()
         {
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
-            
-            //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
+
             var cmd = "date" + " | ConvertTo-Json";
-            var returnStr =  ConsoleApp_dotnetcore.Utility_PowerShell.runPSCmd(cmd);
+            var returnStr = ConsoleApp_dotnetcore.Utility_PowerShell.runPSCmd(cmd);
 
-
-            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
             JObject myObj = JObject.Parse(returnStr);
             return myObj;
         }
@@ -47,8 +34,8 @@ namespace reactdotnetcore.controllers
         [HttpPost]
         public PowerShellCmd post([FromBody] PowerShellCmd psCmdData)
         {
-       
-            psCmdData.cmdOutput =  ConsoleApp_dotnetcore.Utility_PowerShell.runPSCmd(psCmdData.cmd);
+
+            psCmdData.cmdOutput = ConsoleApp_dotnetcore.Utility_PowerShell.runPSCmd(psCmdData.cmd);
             return psCmdData;
         }
 

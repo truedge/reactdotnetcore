@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-
-using Microsoft.AspNetCore.Html;
-
-using reactdotnetcore.utility;
+using System;
 using System.Data;
 
 namespace reactdotnetcore.controllers
@@ -17,21 +9,14 @@ namespace reactdotnetcore.controllers
     [ApiController]
     public class ProcessStepController : ControllerBase
     {
-        
 
-        // GET api/powershell
+
+        // GET api/processstep
         [HttpGet]
         public ActionResult<JArray> Get()
         {
-            //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
-            
-            //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
             var sql = "select * from step order by name";
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
-
-            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
             JArray myObj = JArray.Parse(jsonString);
             return myObj;
@@ -42,49 +27,55 @@ namespace reactdotnetcore.controllers
         public ActionResult<JObject> Get(int id)
         {
             var sql = "select * from step where id = " + id.ToString();
-            
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
             jsonString = jsonString.Substring(1, jsonString.Length - 2); // trim 
             JObject myObj = JObject.Parse(jsonString);
-            try{
+            try
+            {
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("[]");
             }
             return myObj;
         }
 
         // POST api/values
-        
+
         [HttpPost]
         public JObject post([FromBody] ProcessStepData processStepData)
         {
-       
+
             var sql = @"insert into esscoresql.step (  `name`, `description`, `createdate`, `modifieddate`,`active`,`createdby`,`processid`,`steptypeid` ) "
-              + "values ('" + processStepData.name + "', '" + processStepData.description + "', " 
-                            +  "current_date(), " 
-                            +  "null, " 
-                            + processStepData.active.ToString() + ", '" 
-                            +  "jedge'," 
-                            + processStepData.processid.ToString() + ", '" 
+              + "values ('" + processStepData.name + "', '" + processStepData.description + "', "
+                            + "current_date(), "
+                            + "null, "
+                            + processStepData.active.ToString() + ", '"
+                            + "jedge',"
+                            + processStepData.processid.ToString() + ", '"
                             + processStepData.steptypeid.ToString() + "')";
             Console.WriteLine("sql: " + sql);
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
-Console.WriteLine("sql return: " + returnStr);
+            Console.WriteLine("sql return: " + returnStr);
             // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
-            
+
             JObject myObj;
-            try{
+            try
+            {
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("{\"status\":\"complete\"}");
             }
             return myObj;
         }
-        
+
 
         // PUT api/values/5
         [HttpPut("{id}")]
@@ -92,13 +83,16 @@ Console.WriteLine("sql return: " + returnStr);
         {
             var sql = @"update step set active = 1, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
             Console.WriteLine("sql: " + sql);
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+
             JObject myObj;
-            try{
+            try
+            {
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("{\"status\":\"complete\"}");
             }
             return myObj;
@@ -110,20 +104,23 @@ Console.WriteLine("sql return: " + returnStr);
         {
             var sql = @"update step set active = 0, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
             Console.WriteLine("sql: " + sql);
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+
             JObject myObj;
-            try{
+            try
+            {
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("{\"status\":\"complete\"}");
             }
             return myObj;
         }
     }
 
-    
+
     public class ProcessStepData
     {
         public int id { get; set; }
@@ -136,8 +133,7 @@ Console.WriteLine("sql return: " + returnStr);
         public DateTime createdate { get; set; }
         public DateTime modifieddate { get; set; }
         public int active { get; set; }
-
         public string createdby { get; set; }
     }
-    
+
 }

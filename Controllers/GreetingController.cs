@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-using Microsoft.AspNetCore.Html;
-using reactdotnetcore.utility;
+using System;
 
 
 namespace reactdotnetcore.controllers
@@ -21,7 +14,7 @@ namespace reactdotnetcore.controllers
         public ActionResult<JObject> Get()
         {
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            var returnStr = "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3)  + DateTime.Now.Second.ToString() +"\"}";
+            var returnStr = "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0, 3) + DateTime.Now.Second.ToString() + "\"}";
             JObject myObj = JObject.Parse(returnStr);
             return myObj;
         }

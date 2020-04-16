@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-
-using Microsoft.AspNetCore.Html;
-
-using reactdotnetcore.utility;
 using System.Data;
 
 namespace reactdotnetcore.controllers
@@ -17,24 +8,15 @@ namespace reactdotnetcore.controllers
     [ApiController]
     public class mySQLController : ControllerBase
     {
-        
+
 
         // GET api/powershell
         [HttpGet]
         public ActionResult<JArray> Get()
         {
-            //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
-            
-            //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
             var sql = "select 1 as \"name\"";
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
-
-            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
-            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
-            JArray myObj = JArray.Parse(jsonString);
-            return myObj;
+            DataTable returnDT = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            return JArray.Parse(Newtonsoft.Json.JsonConvert.SerializeObject(returnDT));
         }
 
         // GET api/values/5
@@ -45,21 +27,15 @@ namespace reactdotnetcore.controllers
         }
 
         // POST api/values
-        
+
         [HttpPost]
         public JArray post([FromBody] SQLQuery sqlCmdData)
         {
-       
-            var sql = sqlCmdData.sql;
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
-
-            // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
-            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
-            JArray myObj = JArray.Parse(jsonString);
-            return myObj;
+            DataTable returnDT = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sqlCmdData.sql);
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnDT);
+            return JArray.Parse(jsonString);
         }
-        
+
 
         // PUT api/values/5
         [HttpPut("{id}")]

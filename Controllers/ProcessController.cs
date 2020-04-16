@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-
-using Microsoft.AspNetCore.Html;
-
-using reactdotnetcore.utility;
+using System;
 using System.Data;
 
 namespace reactdotnetcore.controllers
@@ -17,18 +9,18 @@ namespace reactdotnetcore.controllers
     [ApiController]
     public class ProcessController : ControllerBase
     {
-        
+
 
         // GET api/powershell
         [HttpGet]
         public ActionResult<JArray> Get()
         {
             //string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
-            
+
+
             //var whoami = Utility_PowerShell.runPSCmd("whoami" + " | ConvertTo-Json");
             var sql = "select * from process";
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
 
             // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
@@ -42,66 +34,75 @@ namespace reactdotnetcore.controllers
         public ActionResult<JObject> Get(int id)
         {
             var sql = "select * from process where id = " + id.ToString();
-            
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
             jsonString = jsonString.Substring(1, jsonString.Length - 2); // trim 
             JObject myObj = JObject.Parse(jsonString);
-            try{
+            try
+            {
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("[]");
             }
             return myObj;
         }
 
         // POST getProcess
-         [HttpPost("{id}")]
+        [HttpPost("{id}")]
         //Process/ProcessConfig/34
         public JObject post(int id)
         {
             var sql = "select * from process where id = " + id.ToString();
-            
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
             jsonString = jsonString.Substring(1, jsonString.Length - 2); // trim 
             JObject myObj = JObject.Parse(jsonString);
-            try{
+            try
+            {
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("[]");
             }
             return myObj;
         }
 
         // POST api/values
-        
+
         [HttpPost]
         public JObject post([FromBody] ProcessData processData)
         {
-       
+
             var sql = @"insert into process (  `name`, `description`, `createdate`, `modifieddate`,`active`,`createdby` ) "
-              + "values ('" + processData.name + "', '" + processData.description + "', " 
-                            +  "current_date(), " 
-                            +  "null, " 
-                            + processData.active.ToString()+ ", '" 
-                            +  "jedge' )";
+              + "values ('" + processData.name + "', '" + processData.description + "', "
+                            + "current_date(), "
+                            + "null, "
+                            + processData.active.ToString() + ", '"
+                            + "jedge' )";
             Console.WriteLine("sql: " + sql);
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
             //var returnStr2 =  ConsoleApp_dotnetcore..runPSCmd(cmd);
 
             // "{\"Greeting\":\"Hello\",\"Name\":\"Jamie " + userName.Substring(0,3) + " " + whoami.Substring(0,4) + DateTime.Now.Second.ToString() +"\"}";
-            
+
             JObject myObj;
-            try{
+            try
+            {
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("{\"status\":\"complete\"}");
             }
             return myObj;
         }
-        
+
 
         // PUT api/values/5
         [HttpPut("{id}")]
@@ -109,13 +110,16 @@ namespace reactdotnetcore.controllers
         {
             var sql = @"update process set active = 1, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
             Console.WriteLine("sql: " + sql);
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+
             JObject myObj;
-            try{
+            try
+            {
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("{\"status\":\"complete\"}");
             }
             return myObj;
@@ -127,20 +131,23 @@ namespace reactdotnetcore.controllers
         {
             var sql = @"update process set active = 0, modifieddate=CURRENT_DATE()" + "where id = '" + id + "'";
             Console.WriteLine("sql: " + sql);
-            DataTable returnStr =  ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
-            
+            DataTable returnStr = ConsoleApp_dotnetcore.Utility_mySQL.runSQLQuery_datatable(sql);
+
             JObject myObj;
-            try{
+            try
+            {
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(returnStr);
                 myObj = JObject.Parse(jsonString);
-            }catch{
+            }
+            catch
+            {
                 myObj = JObject.Parse("{\"status\":\"complete\"}");
             }
             return myObj;
         }
     }
 
-    
+
     public class ProcessData
     {
         public int id { get; set; }
@@ -152,5 +159,5 @@ namespace reactdotnetcore.controllers
 
         public string createdby { get; set; }
     }
-    
+
 }
