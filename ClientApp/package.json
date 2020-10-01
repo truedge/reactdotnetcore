@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.4",
-    "@material-ui/icons": "^3.0.2",
+    "@material-ui/core": "",
+    "@material-ui/icons": "",
     "bootstrap": "^4.4.1",
     "jquery": "^3.5.0",
     "material-table": "^1.57.2",
